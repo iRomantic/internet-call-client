@@ -371,7 +371,12 @@ async function getMediaStream() {
 
 // Подключаемся к серверу через socket.io
 // const socket = io('http://localhost:3001');
-const socket = io('https://587817838321.vps.myjino.ru/call');
+// const socket = io('https://587817838321.vps.myjino.ru/call');
+const socket = io('https://587817838321.vps.myjino.ru', {
+  path: '/call/socket.io',
+  transports: ['websocket', 'polling']
+});
+
 
 // Уведомление о первом / новом подключении
 socket.on('firstConnect', (data) => {
