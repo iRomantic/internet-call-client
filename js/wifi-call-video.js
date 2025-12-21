@@ -1083,7 +1083,6 @@ function dialogActivity() {
   const dialogButtonBox = activity.querySelector('.dialog-button-box');
   const videoBoxFullScreenButton = activity.querySelector('.video-box__button-full-screen');
   videoBoxFullScreenButton.addEventListener('click', () => {
-    console.log(buttonFullScreen);
     const partnerVideoBlock = activity.querySelector('#partner-video-block');
     if (!buttonFullScreen) { // не полный экран
       buttonFullScreen = true;
