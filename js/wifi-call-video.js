@@ -37,7 +37,6 @@ let elapsedSeconds = 0;
 let localStream = null;
 let isVideoEnabled = false;
 let hasVideoCapability = false;
-let currentFacingMode = 'user'; // стартуем с фронталки
 
 // localStorage.clear();
 
@@ -769,11 +768,6 @@ function showLocalVideo(stream) {
     }
   }
   localVideo.srcObject = stream;
-
-  // кликом по видео переключаем камеру
-  localVideo.addEventListener('click', async () => {
-    await switchCamera();
-  });
 }
 
 // функция скрывает локальное видео
@@ -913,52 +907,6 @@ function setActivity(activity) {
 
   // устанавливаем нужную activity
   app.appendChild(activity);
-}
-
-// функция переключения камеры (фронтальная / задняя)
-async function switchCamera() {
-  if (!localStream) return;
-
-  currentFacingMode =
-    currentFacingMode === 'user' ? 'environment' : 'user';
-
-  try {
-    const newStream = await navigator.mediaDevices.getUserMedia({
-      video: {
-        facingMode: { exact: currentFacingMode },
-        width: { ideal: 640 },
-        height: { ideal: 480 }
-      },
-      audio: false
-    });
-
-    const newVideoTrack = newStream.getVideoTracks()[0];
-
-    // 1️⃣ Заменяем track в PeerConnection
-    const sender = peerConnection
-      .getSenders()
-      .find(s => s.track && s.track.kind === 'video');
-
-    if (sender) {
-      await sender.replaceTrack(newVideoTrack);
-    }
-
-    // 2️⃣ Останавливаем старый track
-    localStream.getVideoTracks().forEach(track => track.stop());
-
-    // 3️⃣ Обновляем stream
-    localStream.removeTrack(localStream.getVideoTracks()[0]);
-    localStream.addTrack(newVideoTrack);
-
-    // 4️⃣ Обновляем локальное видео
-    document.querySelector('#local-video').srcObject = localStream;
-
-  } catch (err) {
-    console.error('Ошибка переключения камеры', err);
-
-    // fallback — без exact
-    currentFacingMode = 'user';
-  }
 }
 
 function startActivity(canWifiCall=true) {
