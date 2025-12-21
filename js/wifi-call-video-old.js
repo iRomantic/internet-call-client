@@ -1067,29 +1067,8 @@ function dialogActivity() {
         <button class="dialog-icons-block__button dialog-icons-block__button_sound-active" id="dialog-sound-button"></button>
       </div>
     </div>
-    <div class="dialog-video-box video-box" id="partner-video-block">
-      <button class="video-box__button-full-screen"></button>
-    </div>
+    <div class="dialog-video-box video-box"></div>
   `;
-
-  let buttonFullScreen = false;
-  const dialogButtonBox = activity.querySelector('.dialog-button-box');
-  const videoBoxFullScreenButton = activity.querySelector('.video-box__button-full-screen');
-  videoBoxFullScreenButton.addEventListener('click', () => {
-    console.log(buttonFullScreen);
-    const partnerVideoBlock = activity.querySelector('#partner-video-block');
-    if (!buttonFullScreen) { // не полный экран
-      buttonFullScreen = true;
-      partnerVideoBlock.classList.remove('video-box');
-      partnerVideoBlock.classList.add('video-box_full-screen');
-      dialogButtonBox.classList.add('dialog-button-box_full-screen');
-    } else {
-      buttonFullScreen = false;
-      partnerVideoBlock.classList.add('video-box');
-      partnerVideoBlock.classList.remove('video-box_full-screen');
-      dialogButtonBox.classList.remove('dialog-button-box_full-screen');
-    }
-  });
 
   isReportCurrentDialog = false;
   isWiFiCallBusy = true;
