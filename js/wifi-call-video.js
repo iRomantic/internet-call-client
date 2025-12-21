@@ -1069,9 +1069,9 @@ function dialogActivity() {
     <div class="dialog-button-box">
       <button class="activity__button button button_stop-dialog button_stop-dialog_100" id="stop-dialog-button">Завершить</button>
       <div class="dialog-icons-block">
+      <button class="dialog-icons-block__button dialog-icons-block__button_sound-active" id="dialog-sound-button"></button>
         <button class="dialog-icons-block__button dialog-icons-block__button_microphone-active" id="dialog-microphone-button"></button>
         <button class="dialog-icons-block__button dialog-icons-block__button_camera-active dialog-icons-block__button_camera-no-active" id="dialog-camera-button"></button>
-        <button class="dialog-icons-block__button dialog-icons-block__button_sound-active" id="dialog-sound-button"></button>
       </div>
     </div>
     <div class="dialog-video-box video-box" id="partner-video-block">
