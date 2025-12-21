@@ -790,6 +790,8 @@ function updateVideoButton(enabled) {
   }
 }
 
+
+// функция добавляет и убирает видео, если собеседник включил и отключил видео
 function updatePartnerVideoState(videoEnabled) {
   const partnerVideo = document.querySelector('#partner-video');
   if (partnerVideo) {
@@ -798,15 +800,20 @@ function updatePartnerVideoState(videoEnabled) {
       dialogPeerStatus('Собеседник включил видео');
       setTimeout(() => dialogPeerStatus(''), 3000);
 
-      const videoBox = document.querySelector('.video-box');
+      const videoBox = document.querySelector('#partner-video-block');
       videoBox.classList.add('video-box_active');
     } else {
       partnerVideo.style.display = 'none';
       dialogPeerStatus('Собеседник выключил видео');
       setTimeout(() => dialogPeerStatus(''), 3000);
 
-      const videoBox = document.querySelector('.video-box');
+      const videoBox = document.querySelector('#partner-video-block');
+      videoBox.classList.add('video-box');
       videoBox.classList.remove('video-box_active');
+      videoBox.classList.remove('video-box_full-screen');
+
+      const dialogButtonBox = document.querySelector('.dialog-button-box');
+      dialogButtonBox.classList.remove('dialog-button-box_full-screen');
     }
   }
 }
