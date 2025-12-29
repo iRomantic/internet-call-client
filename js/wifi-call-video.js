@@ -315,8 +315,8 @@ function checkPartnerMicrophone(microphone) {
 // Функция для захвата аудио с устройства ------------------------------------------------------------------
 let microphoneEnabled = true; // текущее состояние микрофона (нужно всегда включать при новом разговоре или в конце)
 let audioTracks; // глобальные аудиотреки для работы ниже (вкл / выкл микрофон)
-// ЗАМЕНИТЕ существующую функцию getAudioStream на эту:
-async function getMediaStream() {
+
+/* async function getMediaStream() {
   try {
     // Всегда запрашиваем и аудио, и видео
     const stream = await navigator.mediaDevices.getUserMedia({
@@ -367,6 +367,53 @@ async function getMediaStream() {
       console.error("Ошибка получения аудио:", audioError);
       throw audioError;
     }
+  }
+} */
+
+async function getMediaStream() {
+  try {
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    const stream = await navigator.mediaDevices.getUserMedia({
+      audio: {
+        echoCancellation: true,
+        noiseSuppression: true,
+        autoGainControl: false,
+      },
+      video: isMobile
+        ? { facingMode: 'user' }
+        : true
+    });
+
+    localStream = stream;
+    audioTracks = stream;
+
+    // По умолчанию видео выключено
+    stream.getVideoTracks().forEach(track => {
+      track.enabled = false;
+    });
+
+    isVideoEnabled = false;
+    hasVideoCapability = stream.getVideoTracks().length > 0;
+
+    return stream;
+
+  } catch (error) {
+    console.error('Ошибка получения видео, пробуем аудио:', error);
+
+    const audioOnlyStream = await navigator.mediaDevices.getUserMedia({
+      audio: {
+        echoCancellation: true,
+        noiseSuppression: true,
+        autoGainControl: false,
+      }
+    });
+
+    localStream = audioOnlyStream;
+    audioTracks = audioOnlyStream;
+    hasVideoCapability = false;
+
+    return audioOnlyStream;
   }
 }
 
