@@ -420,12 +420,8 @@ async function getMediaStream() {
 // Подключаемся к серверу через socket.io
 // const socket = io('http://localhost:3001');
 // const socket = io('https://587817838321.vps.myjino.ru/call');
-/* const socket = io('https://587817838321.vps.myjino.ru', {
+const socket = io('https://587817838321.vps.myjino.ru', {
   path: '/call/socket.io',
-  transports: ['websocket', 'polling']
-}); */
-
-const socket = io('https://internet-call-server.onrender.com', {
   transports: ['websocket', 'polling']
 });
 
